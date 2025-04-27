@@ -1,6 +1,9 @@
 import math
 
-class RightTriangle:
+def assert_almost_equal(a, b):
+    assert(abs(a - b) / b < 0.0001)
+
+class RightTriangleAdjacent:
     def __init__(self, a=0.0, b=0.0, c=0.0, A=0.0, B=0.0):
         self.a = a  # side a
         self.b = b  # side b
@@ -24,8 +27,8 @@ class RightTriangle:
     # Method to print the sides and angles of the triangle
     def print_triangle_details(self):
         print("\nTriangle Details:")
-        print(f"Sides: a = {self.a:.2f}, b = {self.b:.2f}, c = {self.c:.2f}")
-        print(f"Angles: A = {self.A:.2f}°, B = {self.B:.2f}°, C = 90.00° (right angle)")
+        print(f"Sides: a = {self.a:.4f}, b = {self.b:.4f}, c = {self.c:.4f}")
+        print(f"Angles: A = {self.A:.4f}°, B = {self.B:.4f}°, C = 90.00° (right angle)")
     
     # Method to solve the right triangle based on given inputs
     def solve(self):
@@ -38,7 +41,6 @@ class RightTriangle:
             self.B = self.radians_to_degrees(angle_B_rad)
 
             self.c = self.pythagorean_theorem()
-            self.print_triangle_details()
 
         elif self.c != 0 and self.a != 0 and self.b == 0:
             self.b = math.sqrt(self.c**2 - self.a**2)
@@ -47,8 +49,6 @@ class RightTriangle:
             self.A = self.radians_to_degrees(angle_A_rad)
             self.B = self.radians_to_degrees(angle_B_rad)
 
-            self.print_triangle_details()
-
         elif self.c != 0 and self.b != 0 and self.a == 0:
             self.a = math.sqrt(self.c**2 - self.b**2)
             angle_A_rad = math.atan(self.b / self.a)
@@ -56,40 +56,112 @@ class RightTriangle:
             self.A = self.radians_to_degrees(angle_A_rad)
             self.B = self.radians_to_degrees(angle_B_rad)
 
-            self.print_triangle_details()
-
         elif self.c != 0 and self.b != 0 and self.a == 0:
             self.a = math.sqrt(self.c**2 - self.b**2)
             angle_A_rad = math.atan(self.b / self.a)
             angle_B_rad = math.atan(self.a / self.b)
             self.A = self.radians_to_degrees(angle_A_rad)
             self.B = self.radians_to_degrees(angle_B_rad)
-
-            self.print_triangle_details()
 
         elif self.a != 0 and self.A != 0:
             self.B = 90 - self.A
             self.c = self.a / math.cos(self.degrees_to_radians(self.A))
             self.b = math.sqrt(self.c**2 - self.a**2)
-            self.print_triangle_details()
 
         elif self.b != 0 and self.A != 0:
             self.B = 90 - self.A
             self.c = self.b / math.sin(self.degrees_to_radians(self.A))
             self.a = math.sqrt(self.c**2 - self.b**2)
-            self.print_triangle_details()
 
         elif self.a != 0 and self.B != 0:
             self.A = 90 - self.B
             self.c = self.a / math.sin(self.degrees_to_radians(self.B))
             self.b = math.sqrt(self.c**2 - self.a**2)
-            self.print_triangle_details()
 
         elif self.b != 0 and self.B != 0:
             self.A = 90 - self.B
             self.c = self.b / math.cos(self.degrees_to_radians(self.B))
             self.a = math.sqrt(self.c**2 - self.b**2)
-            self.print_triangle_details()
+
+        elif self.c != 0 and self.B != 0:
+            self.A = 90 - self.B
+            self.a = self.c * math.sin(self.degrees_to_radians(self.B))
+            self.b = math.sqrt(self.c**2 - self.a**2)
+
+        elif self.c != 0 and self.A != 0:
+            self.B = 90 - self.A
+            self.a = self.c * math.cos(self.degrees_to_radians(self.A))
+            self.b = math.sqrt(self.c**2 - self.a**2)
+
+        else:
+            print("Insufficient or invalid data. Please make sure to provide enough information.")
+
+class RightTriangleOpposite(RightTriangleAdjacent):
+    def __init__(self, a=0.0, b=0.0, c=0.0, A=0.0, B=0.0):
+        super().__init__(a, b, c, A, B)
+    
+    # Method to solve the right triangle based on given inputs
+    def solve(self):
+        if self.a != 0 and self.b != 0:
+            # Calculate the angles based on the sides using inverse trig functions
+            angle_A_rad = math.atan(self.a / self.b)  # Angle A: opposite a, adjacent b
+            angle_B_rad = math.atan(self.b / self.a)  # Angle B: opposite b, adjacent a
+
+            self.A = self.radians_to_degrees(angle_A_rad)
+            self.B = self.radians_to_degrees(angle_B_rad)
+
+            self.c = self.pythagorean_theorem()
+
+        elif self.c != 0 and self.a != 0 and self.b == 0:
+            self.b = math.sqrt(self.c**2 - self.a**2)
+            angle_A_rad = math.atan(self.a / self.b)
+            angle_B_rad = math.atan(self.b / self.a)
+            self.A = self.radians_to_degrees(angle_A_rad)
+            self.B = self.radians_to_degrees(angle_B_rad)
+
+        elif self.c != 0 and self.b != 0 and self.a == 0:
+            self.a = math.sqrt(self.c**2 - self.b**2)
+            angle_A_rad = math.atan(self.a / self.b)
+            angle_B_rad = math.atan(self.b / self.a)
+            self.A = self.radians_to_degrees(angle_A_rad)
+            self.B = self.radians_to_degrees(angle_B_rad)
+
+        elif self.c != 0 and self.b != 0 and self.a == 0:
+            self.a = math.sqrt(self.c**2 - self.b**2)
+            angle_A_rad = math.atan(self.a / self.b)
+            angle_B_rad = math.atan(self.b / self.a)
+            self.A = self.radians_to_degrees(angle_A_rad)
+            self.B = self.radians_to_degrees(angle_B_rad)
+
+        elif self.a != 0 and self.A != 0:
+            self.B = 90 - self.A
+            self.c = self.a / math.sin(self.degrees_to_radians(self.A))
+            self.b = math.sqrt(self.c**2 - self.a**2)
+
+        elif self.b != 0 and self.A != 0:
+            self.B = 90 - self.A
+            self.c = self.b / math.cos(self.degrees_to_radians(self.A))
+            self.a = math.sqrt(self.c**2 - self.b**2)
+
+        elif self.a != 0 and self.B != 0:
+            self.A = 90 - self.B
+            self.c = self.a / math.cos(self.degrees_to_radians(self.B))
+            self.b = math.sqrt(self.c**2 - self.a**2)
+
+        elif self.b != 0 and self.B != 0:
+            self.A = 90 - self.B
+            self.c = self.b / math.sin(self.degrees_to_radians(self.B))
+            self.a = math.sqrt(self.c**2 - self.b**2)
+
+        elif self.c != 0 and self.B != 0:
+            self.A = 90 - self.B
+            self.a = self.c * math.cos(self.degrees_to_radians(self.B))
+            self.b = math.sqrt(self.c**2 - self.a**2)
+
+        elif self.c != 0 and self.A != 0:
+            self.B = 90 - self.A
+            self.a = self.c * math.sin(self.degrees_to_radians(self.A))
+            self.b = math.sqrt(self.c**2 - self.a**2)
 
         else:
             print("Insufficient or invalid data. Please make sure to provide enough information.")
@@ -112,12 +184,30 @@ def main():
         A = args[3]
     if len(args) == 5:
         B = args[4]
-    
-    # Create a RightTriangle instance
-    triangle = RightTriangle(a, b, c, A, B)
+
+    triangle = RightTriangleOpposite(a, b, c, A, B)
     
     # Solve and print the triangle details
     triangle.solve()
+
+    check_triangle = RightTriangleOpposite(triangle.a, triangle.b, triangle.c, 0, 0)
+    check_triangle.solve()
+    assert_almost_equal(check_triangle.A, triangle.A)
+    assert_almost_equal(check_triangle.B, triangle.B)
+
+    check_triangle = RightTriangleOpposite(0, 0, triangle.c, triangle.A, 0)
+    check_triangle.solve()
+    assert_almost_equal(check_triangle.a, triangle.a)
+    assert_almost_equal(check_triangle.b, triangle.b)
+    assert_almost_equal(check_triangle.B, triangle.B)
+
+    check_triangle = RightTriangleOpposite(0, 0, triangle.c, 0, triangle.B)
+    check_triangle.solve()
+    assert_almost_equal(check_triangle.a, triangle.a)
+    assert_almost_equal(check_triangle.b, triangle.b)
+    assert_almost_equal(check_triangle.A, triangle.A)
+
+    triangle.print_triangle_details()
 
 # Run the program
 if __name__ == "__main__":
