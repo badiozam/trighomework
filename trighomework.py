@@ -24,9 +24,27 @@ class RightTriangleAdjacent:
     def pythagorean_theorem(self):
         return math.sqrt(self.a**2 + self.b**2)
 
+    def print_triangle_legend(self):
+        print("")
+        print("")
+        print("              /|")
+        print("             / |")
+        print("            /  |")
+        print("           / B |")
+        print("        c /    |")
+        print("         /     | b")
+        print("        /      |")
+        print("       /       |")
+        print("      / A      |")
+        print("     <----------")
+        print("          a")
+
+
     # Method to print the sides and angles of the triangle
     def print_triangle_details(self):
+        self.print_triangle_legend()
         print("\nTriangle Details:")
+
         print(f"Sides: a = {self.a:.4f}, b = {self.b:.4f}, c = {self.c:.4f}")
         print(f"Angles: A = {self.A:.4f}°, B = {self.B:.4f}°, C = 90.00° (right angle)")
     
@@ -100,6 +118,21 @@ class RightTriangleOpposite(RightTriangleAdjacent):
     def __init__(self, a=0.0, b=0.0, c=0.0, A=0.0, B=0.0):
         super().__init__(a, b, c, A, B)
     
+    def print_triangle_legend(self):
+        print("")
+        print("")
+        print("              /|")
+        print("             / |")
+        print("            /  |")
+        print("           / B |")
+        print("        c /    |")
+        print("         /     | a")
+        print("        /      |")
+        print("       /       |")
+        print("      / A      |")
+        print("     <----------")
+        print("          b")
+
     # Method to solve the right triangle based on given inputs
     def solve(self):
         if self.a != 0 and self.b != 0:
